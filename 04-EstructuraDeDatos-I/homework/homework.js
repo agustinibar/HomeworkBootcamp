@@ -29,7 +29,7 @@ function nFibonacci(n) {
   }
   return n = nFibonacci(n-1) + nFibonacci(n-2)
 }
-
+console.log(nFibonacci(9))
 /*
 Implementar la clase Queue, sabiendo que es una estructura de tipo FIFO, donde el primer elemento que ingresa es el primero que se quita. Definir los siguientes métodos:
   - enqueue: agrega un valor respetando el orden.
