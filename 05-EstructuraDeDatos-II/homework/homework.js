@@ -91,32 +91,32 @@ function HashTable() { //creamos la hash table para guardar datos encriptados
   this.buckets = []; //es el array donde guardaremos las KEYS
   this.numBuckets = 35; //es la cantidad limite de posiciones que tiene nuestro Array (this.buckets)
 }
-                                // [[{key:value},{key:value},{key:value}[{key:value}][{key:value},{key:value}][{key:value},{key:value},{key:value}]]
-var hash = new HashTable();
-
-HashTable.prototype.hash = function (key){
+                                // BUCKET:[indiceEnbuckets[{:}], [{key:value}], [{key:value},{key:value}], [{key:value},{key:value},{key:value}]]
+//var hash = new HashTable();
+                                    // (foo)(ofo)
+HashTable.prototype.hash = function (key){ //LO UNICO QUE HACE ESTE METODO, ES DARNOS UN NUMERO. ESE NUMERO ES LA POSICION DENTRO DEL ARRAY PADRE (BUCKETS)
   
   let hash = 0;
-  for(var i = 0; i<key.length; i++){
-    hash +=  key.charCodeAt(i); //
+  for(var i = 0; i<key.length; i++){        //key = (andy) hashearlo => (65 + 78 + 68 + 89) = numero de posicion 
+    hash +=  key.charCodeAt(i); //hash  = hash + codigo ascci de la letra iterada 
   } 
  return hash % this.numBuckets // retorna un numero que sera la posicion a guardar en buckets[]
-};
+}; 
 
 
 HashTable.prototype.set = function(key, value){
   if (typeof key !== 'string') throw TypeError('Keys must be strings')
    
-  let indice = this.hash(key); //recibimos el numero llamando al metodo hasKey que nos dara la posicion, esta posicion sera igual //
+  let indice = this.hash(key); //recibimos el numero llamando al metodo HASH que nos dara la posicion, esta posicion sera igual //
   if (!this.buckets[indice]){// corroboramos si la posicion esta vacia 
     this.buckets[indice] = {};//si no hay nada, creamos un objeto vacio dentro de esa posicion
   }
-  let indiceEnBuckets = this.buckets[indice]
-  indiceEnBuckets[key] = value
+  let indiceEnBuckets = this.buckets[indice] //declaramos una variable igualandola al indice, es decir, a la posicion dentro del array Buckets
+  indiceEnBuckets[key] = value //asiganmos valor a la propiedad key dentro del indice del buckets [indice(4)[{key:value}]]
 };
-HashTable.prototype.get = function(key){
-  let clave = this.hash(key);
-  return this.buckets[clave][key]
+HashTable.prototype.get = function(key){  //nos busca una clave pasada por parametro 
+  let indice = this.hash(key); //almacenamos la llave hasheada en una variable
+  return this.buckets[indice][key] //buscamos si la clave existe dentro del indice del array
 
 };
 HashTable.prototype.hasKey = function (key){
