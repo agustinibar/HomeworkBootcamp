@@ -16,8 +16,15 @@ const {
 
 var countArray = function(array) {
     // Tu código aca:
-    
-}
+let suma = 0; 
+for(let i = 0; i<array.length; i++){
+    if(Array.isArray(array[i])){
+        suma += countArray(array[i]);
+    }else {
+        suma += array[i]
+    };
+}; return suma 
+};
 
 
 // Implementar la función countProps: a partir de un objeto en el cual cada propiedad puede contener
@@ -37,10 +44,23 @@ var countArray = function(array) {
 // dentro de a tenemos 3 propiedades mas, luego a3 tiene otras 3 y por ultimo c tiene una extra.
 // Propiedades: a, a1, a2, a3, f, a, c, o, b, c --> 10 en total
 
-var countProps = function(obj) {
+var countProps = function(objeto) {
     // Tu código aca:
+let suma = 0;
 
-}
+for(propiedad in objeto){
+    if(Array.isArray(objeto[propiedad])){
+        suma += 1
+    } 
+    if (typeof objeto[propiedad] === 'object'){
+        suma += countProps(objeto[propiedad]);
+    } else {
+        suma += 1;
+    }
+}   
+return suma
+
+};
 
 
 // Implementar el método changeNotNumbers dentro del prototype de LinkedList que deberá cambiar
@@ -53,6 +73,21 @@ var countProps = function(obj) {
 
 LinkedList.prototype.changeNotNumbers = function(){
     // Tu código aca:
+    let kiricochos = 0;
+    let current = this.head;
+
+    while(current){
+        if(isNaN(Number(current.value))){
+            current.value = 'Kiricocho'
+            kiricochos ++
+        }else if (current.value === 'Kiricocho'){
+            return current.value
+        }
+        current = current.next
+    };
+
+    return kiricochos
+
 
 }
 
@@ -67,13 +102,17 @@ LinkedList.prototype.changeNotNumbers = function(){
 
 var mergeQueues = function(queueOne, queueTwo) {
     // Tu código aca:
-
-}
+ let newQ = new Queue;
+ while(queueOne.size() >= 1 || queueTwo.size() >= 1){
+    if(queueOne.size() && newQ.enqueue(queueOne.dequeue()));
+    if(queueTwo.size() && newQ.enqueue(queueTwo.dequeue()));
+ }return newQ
+};
 
 
 // Implementar la funcion closureMult que permita generar nuevas funciones que representen
 // las tablas de multiplicación de distintos numeros
-// Ejemplo: 
+// Ejemplo:
 // - var multByFour = closureMult(4);
 // - multByFour(2) --> 8 (2 * 4)
 // - multByFour(5) --> 20
@@ -82,13 +121,22 @@ var mergeQueues = function(queueOne, queueTwo) {
 
 var closureMult = function(multiplier) {
     // Tu código aca:
+    var resultado = 0;
+    return function(num){
+        resultado = num * multiplier
+        return resultado
+    };
 
-}
+};
 
 // Implementar el método sum dentro del prototype de BinarySearchTree
 // que debe retornar la suma total de los valores dentro de cada nodo del arbol
 BinarySearchTree.prototype.sum = function() {
     // Tu código aca:
+    if(this.left === null && this.right === null)return this.value;
+   if(this.left !== null && this.right === null)return  this.value + this.left.sum();
+   if(this.left === null && this.right !== null)return  this.value +  this.right.sum() ;
+   if(this.left !== null && this.right !== null)return  this.value + this.left.sum() + this.right.sum()
 
 }
 
